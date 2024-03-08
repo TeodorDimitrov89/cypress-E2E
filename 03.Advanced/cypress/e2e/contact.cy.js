@@ -26,4 +26,39 @@ describe("contact form", () => {
     // cy.get('[data-cy="contact-btn-submit"]').should("be.disabled");
     // cy.get('[data-cy="contact-btn-submit"]').should("have.attr", 'disabled');
   });
+
+  it("should validate the form input", () => {
+    cy.visit("http://localhost:5173/about");
+    cy.get('[data-cy="contact-btn-submit"]').click();
+    cy.get('[data-cy="contact-btn-submit"]').then((el) => {
+      expect(el).to.not.have.attr("disabled");
+      expect(el.text()).to.not.eq("Sending...");
+    });
+
+    cy.get('[data-cy="contact-btn-submit"]').contains("Send Message");
+
+    cy.get('[data-cy="contact-input-message"]').focus().blur();
+
+    cy.get('[data-cy="contact-input-message"]')
+      .parent()
+      .should("have.attr", "class")
+      .and("match", /invalid/);
+
+    // .should((el) => {
+    //   expect(el.attr("class")).not.to.be.undefined;
+    //   expect(el.attr("class")).contains("invalid");
+    // });
+
+    cy.get('[data-cy="contact-input-name"]').focus().blur();
+    cy.get('[data-cy="contact-input-name"]')
+      .parent()
+      .should("have.attr", "class")
+      .and("match", /invalid/);
+
+    cy.get('[data-cy="contact-input-email"]').focus().blur();
+    cy.get('[data-cy="contact-input-email"]')
+      .parent()
+      .should("have.attr", "class")
+      .and("match", /invalid/);
+  });
 });
