@@ -6,9 +6,14 @@ describe("contact form", () => {
     cy.get('[data-cy="contact-input-name"]').type("Jonh Doe");
     cy.get('[data-cy="contact-input-email"]').type("jonh@gmail.com");
 
-    cy.get('[data-cy="contact-btn-submit"]')
-      .contains("Send Message")
-      .should("not.be.disabled");
+    // cy.get('[data-cy="contact-btn-submit"]')
+    //   .contains("Send Message")
+    //   .should("not.be.disabled");
+
+    cy.get('[data-cy="contact-btn-submit"]').then((el) => {
+      expect(el.attr("disabled")).to.be.undefined;
+      expect(el.text()).to.be.eq("Send Message");
+    });
 
     // cy.get('[data-cy="contact-btn-submit"]').should("not.be.disabled");
 
