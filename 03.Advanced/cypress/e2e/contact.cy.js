@@ -8,6 +8,9 @@ describe("contact form", () => {
     cy.visit("/about");
   });
   it("should submit the form", () => {
+    cy.task("seedDatabase", "filename.scv").then((returnedValue) => {
+      // we can use the returnedValue
+    });
     cy.getById("contact-input-message").type("Hello World!");
     cy.getById("contact-input-name").type("Jonh Doe");
 
